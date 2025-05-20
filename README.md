@@ -36,7 +36,7 @@ const App = () => {
       title: "Sentiment Analyzer",
       category: "Machine Learning",
       description: "Text analysis tool that detects sentiment in user input using NLP techniques.",
-      image: "https://picsum.photos/id/1018/300/200 "
+     image: "https://picsum.photos/id/1018/300/200 "
     },
     {
       title: "Task Management App",
