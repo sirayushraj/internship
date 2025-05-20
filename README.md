@@ -1,117 +1,354 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internship Portfolio Showcase</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-const App = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+    .dark {
+      background-color: #111827;
+      color: #f3f4f6;
+    }
 
-  // Mock project data
-  const projects = [
-    {
-      title: "E-Commerce Store",
-      category: "Web Development",
-      description: "A full-stack e-commerce platform with shopping cart and checkout system.",
-      image: "https://picsum.photos/id/1012/300/200 "
-    },
-    {
-      title: "Weather App",
-      category: "Mobile Development",
-      description: "An Android app that provides real-time weather updates using OpenWeather API.",
-      image: "https://picsum.photos/id/1013/300/200 "
-    },
-    // ... other projects ...
-  ];
+    header {
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  // Filter logic
-  const filteredProjects = projects.filter(project => {
-    const matchesFilter = activeFilter === 'All' || project.category === activeFilter;
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #4f46e5;
+    }
 
-  return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Header */}
-      <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm transition-colors duration-300`}>
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-indigo-600">Internship Portfolio Showcase</h1>
-            <p className={`mt-2 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Explore amazing projects created by our talented interns</p>
-          </div>
+    nav {
+      background: white;
+      padding: 0.5rem 2rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
 
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`p-2 rounded-full focus:outline-none transition-colors ${
-              darkMode ? 'bg-gray-700 text-yellow-300' : 'bg-gray-200 text-gray-700'
-            }`}
-            aria-label="Toggle dark mode"
-          >
-            {darkMode ? (
-              // Sun Icon
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            ) : (
-              // Moon Icon
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </header>
+    nav button {
+      margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      background-color: #e5e7eb;
+      color: #111827;
+    }
 
-      {/* Projects Grid */}
-      <main className="container mx-auto px-4 py-8">
-        {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project, index) => (
-              <div 
-                key={index} 
-                className={`bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ${
-                  darkMode ? 'bg-gray-800' : 'bg-white'
-                }`}
-              >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-5">
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 ${
-                    darkMode 
-                      ? 'bg-indigo-900 text-indigo-200' 
-                      : 'bg-indigo-100 text-indigo-800'
-                  }`}>
-                    {project.category}
-                  </span>
-                  <h2 className="text-xl font-bold mb-2">{project.title}</h2>
-                  <p className={`text-gray-600 mb-4 ${darkMode ? 'text-gray-300' : ''}`}>{project.description}</p>
-                  <button 
-                    onClick={() => setSelectedProject(project)}
-                    className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
-                  >
-                    View Details
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16">
-            <svg className={`mx-auto h-12 w-12 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <h3 className={`mt-2 text-lg font-medium ${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>No projects found</h3>
-            <p className={`mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Try changing your filter or search terms.</p>
-          </div>
-        )}
-      </main>
+    nav button.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .chip {
+      background-color: #dbeafe;
+      color: #1e40af;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .card-body h2 {
+      font-size: 1.25rem;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .card-body p {
+      font-size: 0.875rem;
+      color: #4b5563;
+    }
+
+    .card-body button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .search-bar {
+      max-width: 400px;
+      margin: 0 auto 1rem auto;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid #d1d5db;
+    }
+
+    .dark .search-bar input {
+      background: #1f2937;
+      color: #f3f4f6;
+      border-color: #4b5563;
+    }
+
+    .dark .card {
+      background: #1f2937;
+    }
+
+    .dark .chip {
+      background-color: #374151;
+      color: #d1d5db;
+    }
+
+    .dark .card-body p {
+      color: #d1d5db;
+    }
+
+    .dark .card-body button {
+      background-color: #6366f1;
+    }
+  </style>
+</head>
+<body>
+  <header class="dark:bg-gray-800">
+    <div>
+      <h1>🎓 Internship Portfolio Showcase</h1>
+      <p>Explore amazing projects created by our talented interns</p>
     </div>
-  );
-};
+    <button id="theme-toggle" style="font-size: 1.25rem;">🌙</button>
+  </header>
 
-export default App;
+  <nav id="filters"></nav>
+
+  <main>
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search projects..." />
+    </div>
+
+    <div class="grid" id="project-grid"></div>
+  </main>
+
+  <footer>
+    © 2025 Internship Portfolio Showcase | Created with HTML/CSS/JS
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="project-modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="hideModal()">&times;</span>
+      <img id="modal-image" src="" alt="">
+      <h2 id="modal-title"></h2>
+      <p><strong>Category:</strong> <span id="modal-category"></span></p>
+      <p id="modal-description"></p>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        title: "E-Commerce Store",
+        category: "Web Development",
+        description: "A full-stack e-commerce platform with shopping cart and checkout system.",
+        image: "https://picsum.photos/id/1012/300/200 "
+      },
+      {
+        title: "Weather App",
+        category: "Mobile Development",
+        description: "An Android app that provides real-time weather updates using OpenWeather API.",
+        image: "https://picsum.photos/id/1013/300/200 "
+      },
+      {
+        title: "Data Dashboard",
+        category: "Data Science",
+        description: "Interactive dashboard for visualizing sales data with Plotly and Dash.",
+        image: "https://picsum.photos/id/1015/300/200 "
+      },
+      {
+        title: "Portfolio Website",
+        category: "Web Development",
+        description: "Personal portfolio site built with React and Tailwind CSS.",
+        image: "https://picsum.photos/id/1016/300/200 "
+      },
+      {
+        title: "Sentiment Analyzer",
+        category: "Machine Learning",
+        description: "Text analysis tool that detects sentiment in user input using NLP techniques.",
+        image: "https://picsum.photos/id/1018/300/200 "
+      },
+      {
+        title: "Task Management App",
+        category: "Mobile Development",
+        description: "Cross-platform task manager with local storage and reminders.",
+        image: "https://picsum.photos/id/1019/300/200 "
+      }
+    ];
+
+    const categories = ['All', ...new Set(projects.map(p => p.category))];
+
+    const filterNav = document.getElementById('filters');
+    const projectGrid = document.getElementById('project-grid');
+    const modal = document.getElementById('project-modal');
+    const searchInput = document.getElementById('search');
+
+    let activeFilter = 'All';
+    let darkMode = false;
+
+    function renderFilters() {
+      filterNav.innerHTML = '';
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.textContent = cat;
+        if (cat === activeFilter) btn.classList.add('active');
+        btn.onclick = () => {
+          activeFilter = cat;
+          renderFilters();
+          renderProjects();
+        };
+        filterNav.appendChild(btn);
+      });
+    }
+
+    function renderProjects() {
+      const term = searchInput.value.toLowerCase();
+      projectGrid.innerHTML = '';
+
+      projects.filter(p => {
+        return (activeFilter === 'All' || p.category === activeFilter) &&
+               (p.title.toLowerCase().includes(term) || p.description.toLowerCase().includes(term));
+      }).forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <img src="${project.image}" alt="${project.title}">
+          <div class="card-body">
+            <div class="chip">${project.category}</div>
+            <h2>${project.title}</h2>
+            <p>${project.description}</p>
+            <button onclick="showModal('${project.title}', '${project.category}', '${project.description}', '${project.image}')">View Details</button>
+          </div>
+        `;
+        projectGrid.appendChild(card);
+      });
+    }
+
+    function showModal(title, category, description, image) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-category').textContent = category;
+      document.getElementById('modal-description').textContent = description;
+      document.getElementById('modal-image').src = image;
+      modal.classList.add('show');
+    }
+
+    function hideModal() {
+      modal.classList.remove('show');
+    }
+
+    searchInput.addEventListener('input', renderProjects);
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      darkMode = !darkMode;
+      document.body.classList.toggle('dark');
+      document.getElementById('theme-toggle').textContent = darkMode ? '☀️' : '🌙';
+    });
+
+    // Init
+    renderFilters();
+    renderProjects();
+  </script>
+</body>
+</html>
