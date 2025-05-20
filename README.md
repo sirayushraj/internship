@@ -20,36 +20,10 @@ const App = () => {
       description: "An Android app that provides real-time weather updates using OpenWeather API.",
       image: "https://picsum.photos/id/1013/300/200 "
     },
-    {
-      title: "Data Dashboard",
-      category: "Data Science",
-      description: "Interactive dashboard for visualizing sales data with Plotly and Dash.",
-      image: "https://picsum.photos/id/1015/300/200 "
-    },
-    {
-      title: "Portfolio Website",
-      category: "Web Development",
-      description: "Personal portfolio site built with React and Tailwind CSS.",
-      image: "https://picsum.photos/id/1016/300/200 "
-    },
-    {
-      title: "Sentiment Analyzer",
-      category: "Machine Learning",
-      description: "Text analysis tool that detects sentiment in user input using NLP techniques.",
-     image: "https://picsum.photos/id/1018/300/200 "
-    },
-    {
-      title: "Task Management App",
-      category: "Mobile Development",
-      description: "Cross-platform task manager with local storage and reminders.",
-      image: "https://picsum.photos/id/1019/300/200 "
-    }
+    // ... other projects ...
   ];
 
-  // Get unique categories for filtering
-  const categories = ['All', ...new Set(projects.map(project => project.category))];
-
-  // Filter and search logic
+  // Filter logic
   const filteredProjects = projects.filter(project => {
     const matchesFilter = activeFilter === 'All' || project.category === activeFilter;
     const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -88,45 +62,7 @@ const App = () => {
             )}
           </button>
         </div>
-
-        {/* Search Bar */}
-        <div className="container mx-auto px-4 pb-6 max-w-md">
-          <input
-            type="text"
-            placeholder="Search projects..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${
-              darkMode 
-                ? 'bg-gray-700 border-gray-600 text-white focus:ring-yellow-400' 
-                : 'bg-white border-gray-300 text-gray-900 focus:ring-indigo-500'
-            }`}
-          />
-        </div>
       </header>
-
-      {/* Filters */}
-      <nav className={`${darkMode ? 'bg-gray-800' : 'bg-white'} py-4 shadow-sm sticky top-0 z-10 transition-colors duration-300`}>
-        <div className="container mx-auto px-4 overflow-x-auto">
-          <div className="flex space-x-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveFilter(category)}
-                className={`px-4 py-2 rounded-full transition-all duration-300 ${
-                  activeFilter === category 
-                    ? 'bg-indigo-600 text-white' 
-                    : darkMode
-                      ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
 
       {/* Projects Grid */}
       <main className="container mx-auto px-4 py-8">
@@ -174,37 +110,6 @@ const App = () => {
           </div>
         )}
       </main>
-
-      {/* Modal */}
-      {selectedProject && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4 transition-opacity duration-300">
-          <div className={`bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-3xl max-h-screen overflow-y-auto transition-colors duration-300 ${
-            darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
-          }`}>
-            <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-64 object-cover rounded mb-4" />
-            <h2 className="text-3xl font-bold mb-2">{selectedProject.title}</h2>
-            <p className={`text-sm mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Category: <strong>{selectedProject.category}</strong>
-            </p>
-            <p className="mb-6">{selectedProject.description}</p>
-            <button 
-              onClick={() => setSelectedProject(null)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className={`${darkMode ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-white border-gray-200 text-gray-600'} border-t mt-auto transition-colors duration-300`}>
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-center">
-            © 2025 Internship Portfolio Showcase | Created with React & Tailwind CSS
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
