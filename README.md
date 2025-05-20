@@ -223,7 +223,7 @@
   </main>
 
   <footer>
-    © 2025 Internship Portfolio Showcase | Created with HTML/CSS/JS
+    ©| Created by Ayush Raj
   </footer>
 
   <!-- Modal -->
